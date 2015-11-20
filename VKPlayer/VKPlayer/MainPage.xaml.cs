@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using VK.WindowsPhone.SDK;
 using VK.WindowsPhone.SDK.API;
@@ -25,19 +28,66 @@ namespace VKPlayer
 
             VKSDK.Authorize(_scope);
         }
+        
+        private void PlayMusic_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            PlayTrack((sender as TextBlock).Tag.ToString());
+        }
 
-        private void Button_Tapped(object sender, TappedRoutedEventArgs e)
+        private string GetTrueUrl(string url)
+        {
+            return url.Substring(0, url.IndexOf('?'));
+        }
+
+        private void TextQuest_TextChanged(object sender, TextChangedEventArgs e)
         {
             VKRequest.Dispatch<VKList<VKAudio>>(new VKRequestParameters(
                 "audio.search",
-                "q", "guns"),
+                "q", TextQuest.Text),
                 (result) =>
                 {
-                    foreach (var elenent in result.Data.items)
-                    {
-                        AudioList.Items.Add(elenent.title);
-                    }
+                    AudioList.ItemsSource = result.Data.items;
                 });
+        }
+
+        private void NextSound_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            PlayTrack((AudioList.Items[++AudioList.SelectedIndex] as VKAudio).url);
+        }
+
+        private void PlayTrack(string url)
+        {
+            PlayerElement.Source = new Uri(GetTrueUrl(url));
+            PlayerElement.Play();
+        }
+
+        private void PreviewSound_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            PlayTrack((AudioList.Items[--AudioList.SelectedIndex] as VKAudio).url);
+
+        }
+
+        private void Play_Pausa_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (PlayerElement.CurrentState==MediaElementState.Playing)
+            {
+                PlayerElement.Pause();
+                Image_Loaded(@"Resources/play.png");
+            }
+            else
+            {
+                PlayerElement.Play();
+                Image_Loaded(@"Resources/pausa.png");
+            }
+     
+        }
+
+        private void Image_Loaded(string image)
+        {
+            var bitmapImage = new BitmapImage();
+            bitmapImage.UriSource = new Uri(PlayButton.BaseUri, image);
+            PlayButton.Source = bitmapImage;
+
         }
     }
 }
