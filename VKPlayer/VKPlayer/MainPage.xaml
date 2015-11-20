@@ -25,32 +25,46 @@
         <Grid.Background>
             <ImageBrush ImageSource="Resources/light-forest.jpg" Stretch="UniformToFill" Opacity="0.75"/>
         </Grid.Background>
-
-        <Image x:Name="PreviewButton"
+        <ListView
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Grid.Row="4" 
+            Grid.Column="0" 
+            >
+            <Image x:Name="PreviewButton"
                Source="Resources/preview.png"
-               Grid.Row="4" 
-               Grid.Column="0" 
                Stretch="None" Margin="0,0.5,0.333,0"
-               Tapped="PreviewSound_Tapped"
+               Tapped="PreviewSound_Tapped" Height="113" Width="110"
                />
+        </ListView>
 
-        <Image x:Name="NextButton"
+        <ListView
+            Grid.Row="4" 
+            Grid.Column="2" 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            >
+            <Image x:Name="NextButton"
             Source="Resources/next.png"
-               Grid.Row="4" 
-               Grid.Column="2" 
+             
                Stretch="None" Margin="0.333,0.5,0,0"
-               Tapped="NextSound_Tapped"
+               Tapped="NextSound_Tapped" Height="112" Width="110"
                />
-        
-               
-               
+        </ListView>
 
-        <Image x:Name="PlayButton"
+        <ListView
+            Grid.Row="4"
+            HorizontalAlignment="Center"  
+            Grid.Column="1"
+            VerticalAlignment="Center" 
+            >
+            <Image x:Name="PlayButton"
                Source="Resources/pausa.png"
-               Grid.Row="4" 
-               Stretch="None" Grid.ColumnSpan="2" Margin="133,0.5,0.667,0"
-               Tapped="Play_Pausa_Tapped"
+               Stretch="None" 
+               Tapped="Play_Pausa_Tapped" Width="110" Height="113"
+            
                />
+        </ListView>
 
         <ListBox x:Name="AudioList"
                  FontSize="25" 
@@ -63,9 +77,9 @@
                  Grid.Column="0"
                  Foreground="White" Background="Transparent" 
                  >
-       
-            
-                <ListBox.ItemTemplate>
+
+
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding title}"
                Tag="{Binding url}"
@@ -73,7 +87,7 @@
                />
                 </DataTemplate>
             </ListBox.ItemTemplate>
-            
+
         </ListBox>
 
         <TextBox x:Name="TextQuest"
