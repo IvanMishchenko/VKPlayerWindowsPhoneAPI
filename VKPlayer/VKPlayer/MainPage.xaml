@@ -103,7 +103,20 @@
                  Grid.Column="0" 
                  Grid.ColumnSpan="3"
                  HorizontalAlignment="Stretch"
-                 VerticalAlignment="Stretch" Margin="0,366.333,0,191" Grid.RowSpan="3"/>
+                 VerticalAlignment="Stretch" 
+                 Margin="0,366.333,0,191"                 
+                 Grid.RowSpan="3"
+                 Maximum="{
+                            Binding ElementName=PlayerElement,
+                            Path=NaturalDuration.TimeSpan.TotalSeconds
+                            }" 
+                 Value="{
+                        Binding ElementName=PlayerElement,
+                        Path=Position.TotalSeconds,
+                        Mode=TwoWay
+                        }"
+                  />
+        
 
     </Grid>
 </Page>
