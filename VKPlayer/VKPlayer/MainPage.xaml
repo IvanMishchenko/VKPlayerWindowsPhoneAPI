@@ -16,10 +16,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="23*"/>
-            <RowDefinition Height="44*"/>
+            <RowDefinition Height="43*"/>
             <RowDefinition Height="367*"/>
             <RowDefinition Height="14*"/>
-            <RowDefinition Height="192*"/>
+            <RowDefinition Height="193*"/>
         </Grid.RowDefinitions>
 
         <Grid.Background>
@@ -29,7 +29,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Grid.Row="4" 
-            Grid.Column="0" 
+            Grid.Column="0" Margin="12,40.333,11.333,40" 
             >
             <Image x:Name="PreviewButton"
                Source="Resources/preview.png"
@@ -42,7 +42,7 @@
             Grid.Row="4" 
             Grid.Column="2" 
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
+            VerticalAlignment="Center" Margin="11.333,41.333,12,41"
             >
             <Image x:Name="NextButton"
             Source="Resources/next.png"
@@ -56,7 +56,7 @@
             Grid.Row="4"
             HorizontalAlignment="Center"  
             Grid.Column="1"
-            VerticalAlignment="Center" 
+            VerticalAlignment="Center" Margin="11.667,40.333,11.667,41" 
             >
             <Image x:Name="PlayButton"
                Source="Resources/pausa.png"
@@ -75,16 +75,14 @@
                  Height="350"
                  Grid.ColumnSpan="3" 
                  Grid.Column="0"
-                 Foreground="White" Background="Transparent" 
+                 Foreground="White" Background="Transparent" Margin="0,0.167,0,0" 
                  >
-
-
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding title}"
-               Tag="{Binding url}"
-               Tapped="PlayMusic_Tapped"
-               />
+                        Tag="{Binding url}"
+                        Tapped="PlayMusic_Tapped" 
+                        />
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
@@ -93,18 +91,18 @@
         <TextBox x:Name="TextQuest"
                  Grid.ColumnSpan="3" 
                  Grid.Column="0"
-                 TextWrapping="Wrap" Height="44" Margin="0,0.5,0,-0.333" Grid.Row="1" TextChanged="TextQuest_TextChanged" 
+                 TextWrapping="Wrap" Height="44" Margin="0,0.5,0,0" Grid.Row="1" TextChanged="TextQuest_TextChanged" Grid.RowSpan="2" 
                  />
         <MediaElement x:Name="PlayerElement"
                  Grid.Row="1" 
-                 Grid.Column="0" Margin="67,27.5,65.333,15.667"/>
-        <ProgressBar x:Name="ProgressBar"
+                 Grid.Column="0" Margin="67,27.5,65.333,14.833"/>
+        <ProgressBar x:Name="ProgressBarElement"
                  Grid.Row="2" 
                  Grid.Column="0" 
                  Grid.ColumnSpan="3"
                  HorizontalAlignment="Stretch"
                  VerticalAlignment="Stretch" 
-                 Margin="0,366.333,0,191"                 
+                 Margin="0,366.167,0,191"                 
                  Grid.RowSpan="3"
                  Maximum="{
                             Binding ElementName=PlayerElement,
@@ -114,9 +112,18 @@
                         Binding ElementName=PlayerElement,
                         Path=Position.TotalSeconds,
                         Mode=TwoWay
-                        }"
-                  />
-        
+                        }" PointerPressed="ProgressBarElement_PointerPressed"
+                     
+                      >
+
+            <ProgressBar.Foreground>
+                <SolidColorBrush Color="#FFF1BC6A" Opacity="0.5"/>
+            </ProgressBar.Foreground>
+            <ProgressBar.Background>
+                <SolidColorBrush Color="#FF2D2E26" Opacity="0.15999999642372131"/>
+            </ProgressBar.Background>
+        </ProgressBar>
+
 
     </Grid>
 </Page>

@@ -9,6 +9,7 @@ using VK.WindowsPhone.SDK;
 using VK.WindowsPhone.SDK.API;
 using VK.WindowsPhone.SDK.API.Model;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
 namespace VKPlayer
@@ -33,7 +34,7 @@ namespace VKPlayer
         {
             PlayTrack((sender as TextBlock).Tag.ToString());
         }
-
+        
         private string GetTrueUrl(string url)
         {
             return url.Substring(0, url.IndexOf('?'));
@@ -52,18 +53,27 @@ namespace VKPlayer
 
         private void NextSound_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            PlayTrack((AudioList.Items[++AudioList.SelectedIndex] as VKAudio).url);
+            if (AudioList.Items.Count != 0)
+            {
+                PlayTrack((AudioList.Items[++AudioList.SelectedIndex] as VKAudio).url);
+            }
         }
 
         private void PlayTrack(string url)
         {
-            PlayerElement.Source = new Uri(GetTrueUrl(url));
-            PlayerElement.Play();
+            if (url!=String.Empty)
+            {
+                PlayerElement.Source = new Uri(GetTrueUrl(url));
+                PlayerElement.Play();
+            }
         }
 
         private void PreviewSound_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            PlayTrack((AudioList.Items[--AudioList.SelectedIndex] as VKAudio).url);
+            if (AudioList.Items.Count != 0)
+            {
+                PlayTrack((AudioList.Items[--AudioList.SelectedIndex] as VKAudio).url);
+            }
 
         }
 
@@ -89,5 +99,19 @@ namespace VKPlayer
             PlayButton.Source = bitmapImage;
 
         }
+        
+
+        private void ProgressBarElement_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            if (AudioList.Items != null)
+            {
+                var ptrPt = e.GetCurrentPoint(ProgressBarElement);
+                var minuts = (int) ptrPt.Position.X/60;
+                PlayerElement.Position = new TimeSpan(0, 0, minuts, 0, 0);
+            }
+
+        }
+        
+      
     }
 }
